@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using AvaloniaEdit.Document;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GamebuinoAKA.Core.Models;
@@ -42,6 +43,15 @@ namespace GamebuinoAKA.App.ViewModels
         [ObservableProperty] private bool _isBusy;
         [ObservableProperty] private CodeCheckResult? _lastCheckResult;
 
+        // Document AvaloniaEdit lié par la vue (Document="{Binding EditorDocument}") -- AvaloniaEdit
+        // 11.2.0 n'expose pas TextEditor.Text comme propriété liable par le compilateur XAML
+        // (erreur AVLN3000 constatée à la compilation) ; Document, lui, l'est. Instance FIXE (jamais
+        // réassignée) : on ne synchronise que son .Text, dans les deux sens, avec Code -- qui reste la
+        // source de vérité utilisée partout ailleurs dans ce ViewModel (envoi, enregistrement, vérif).
+        // Les deux gardes "if (... != ...)" ci-dessous évitent la boucle infinie entre les deux
+        // évènements de changement qui, sinon, se redéclencheraient l'un l'autre indéfiniment.
+        public TextDocument EditorDocument { get; } = new();
+
         public string Title => FilePath is null ? "(nouveau)" : Path.GetFileName(FilePath);
 
         // Couleur du texte de statut : rouge si le dernier contrôle a trouvé un problème, violet sinon
@@ -61,9 +71,22 @@ namespace GamebuinoAKA.App.ViewModels
             _selectedLanguage = Languages[0];
             _code = _selectedLanguage.NewFileTemplate;
             _portName = settings.Settings.IdfSerialPort;   // même port que Flash/Monitor par défaut
+
+            EditorDocument.Text = _code;
+            EditorDocument.TextChanged += (_, _) =>
+            {
+                if (Code != EditorDocument.Text) Code = EditorDocument.Text;
+            };
         }
 
         partial void OnLastCheckResultChanged(CodeCheckResult? value) => OnPropertyChanged(nameof(StatusColor));
+
+        // Sens Code -> éditeur : NewFile()/OpenFileAsync()/changement de langage modifient Code
+        // directement (pas par la frappe de l'utilisateur) -- il faut répercuter dans EditorDocument.
+        partial void OnCodeChanged(string value)
+        {
+            if (EditorDocument.Text != value) EditorDocument.Text = value;
+        }
 
         partial void OnSelectedLanguageChanged(LanguageDefinition value)
         {

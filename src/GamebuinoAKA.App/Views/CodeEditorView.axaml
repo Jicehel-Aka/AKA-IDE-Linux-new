@@ -23,7 +23,7 @@
 
         <!-- Éditeur -->
         <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4">
-            <ae:TextEditor Name="Editor" Text="{Binding Code, Mode=TwoWay}"
+            <ae:TextEditor Name="Editor" Document="{Binding EditorDocument}"
                            FontFamily="Cascadia Code,Consolas,monospace" FontSize="14"
                            ShowLineNumbers="True" Margin="4"/>
         </Border>

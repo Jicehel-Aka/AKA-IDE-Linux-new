@@ -84,6 +84,20 @@ sandbox : impossible de restaurer Avalonia/AvaloniaEdit/CommunityToolkit.Mvvm/Ne
 La distinction compte : le CŒUR du vérificateur est prouvé correct, seul son branchage dans l'écran ne
 l'est pas encore.
 
+## Correctif après le premier vrai build CI (23 septembre)
+
+Le premier `dotnet build GamebuinoAKA.sln` réel (votre CI GitHub Actions) a échoué comme attendu — voir
+la note « Non compilé » plus haut. Erreur : `AVLN3000`, `TextEditor.Text` n'est pas liable par le
+compilateur XAML d'AvaloniaEdit 11.2.0/Avalonia 11.2.3.
+
+**Corrigé** : liaison sur `Document` (une `AvaloniaEdit.Document.TextDocument`) plutôt que sur `Text`,
+avec une nouvelle propriété `EditorDocument` sur `CodeEditorViewModel`, synchronisée dans les deux sens
+avec `Code` (qui reste la source de vérité partout ailleurs — envoi, enregistrement, vérification).
+Le comportement de cette synchronisation (pas de boucle infinie entre les deux évènements de
+changement, cohérence finale dans les deux sens) a été reproduit fidèlement et **exécuté pour de vrai**
+(10 cas, 10 succès) avec le SDK .NET 10 disponible dans ce sandbox — voir plus haut pour comment. Le
+reste de l'écran (tout ce qui dépend d'Avalonia/AvaloniaEdit eux-mêmes) reste non compilé ici.
+
 ## Réception interactive côté console (nouveau)
 
 AKA-Love a maintenant un **écran « Recevoir un code »** sur la console elle-même (pas seulement côté
