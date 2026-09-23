@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  Coloration syntaxique MicroPython / AKA pour AvaloniaEdit. Même principe que Lua.xshd : les
+  mots-clés Python (Keywords) séparés de l'API native `aka.*` (AkaApi). Voir LanguageDefinitionService.cs.
+-->
+<SyntaxDefinition name="Python" extensions=".py" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="#6A9955" />
+  <Color name="String" foreground="#CE9178" />
+  <Color name="Keyword" foreground="#569CD6" fontWeight="bold" />
+  <Color name="AkaApi" foreground="#4EC9B0" />
+  <Color name="Number" foreground="#B5CEA8" />
+
+  <RuleSet>
+    <Span color="Comment" begin="#" />
+    <Span color="String" begin="&quot;&quot;&quot;" end="&quot;&quot;&quot;" />
+    <Span color="String" begin="&quot;" end="&quot;" />
+    <Span color="String" begin="'" end="'" />
+
+    <Keywords color="Keyword">
+      <Word>and</Word> <Word>as</Word> <Word>assert</Word> <Word>break</Word> <Word>class</Word>
+      <Word>continue</Word> <Word>def</Word> <Word>del</Word> <Word>elif</Word> <Word>else</Word>
+      <Word>except</Word> <Word>False</Word> <Word>finally</Word> <Word>for</Word> <Word>from</Word>
+      <Word>global</Word> <Word>if</Word> <Word>import</Word> <Word>in</Word> <Word>is</Word>
+      <Word>lambda</Word> <Word>None</Word> <Word>nonlocal</Word> <Word>not</Word> <Word>or</Word>
+      <Word>pass</Word> <Word>raise</Word> <Word>return</Word> <Word>True</Word> <Word>try</Word>
+      <Word>while</Word> <Word>with</Word> <Word>yield</Word>
+    </Keywords>
+
+    <Rule color="AkaApi">
+      \b(aka|upygame)(\.[A-Za-z_][A-Za-z0-9_]*)+\b
+    </Rule>
+
+    <Rule color="Number">
+      \b0[xX][0-9a-fA-F]+\b | \b\d+(\.\d+)?\b
+    </Rule>
+  </RuleSet>
+</SyntaxDefinition>

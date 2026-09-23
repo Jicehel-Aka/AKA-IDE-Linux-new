@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ctrl="clr-namespace:GamebuinoAKA.App.Controls"
+             x:Class="GamebuinoAKA.App.Views.TilemapEditorView"
+             x:CompileBindings="False">
+    <Grid ColumnDefinitions="270,*">
+        <!-- Outils + tileset -->
+        <ScrollViewer Grid.Column="0" Background="#16162A">
+            <StackPanel Margin="12" Spacing="8">
+                <TextBlock Text="Tileset" FontWeight="Bold"/>
+                <Grid ColumnDefinitions="*,*">
+                    <StackPanel Grid.Column="0" Margin="0,0,4,0"><TextBlock Text="Tuile L"/><NumericUpDown Value="{Binding TileWidth}" Minimum="1"/></StackPanel>
+                    <StackPanel Grid.Column="1"><TextBlock Text="Tuile H"/><NumericUpDown Value="{Binding TileHeight}" Minimum="1"/></StackPanel>
+                </Grid>
+                <Button Content="📂 Importer tileset" HorizontalAlignment="Stretch" Command="{Binding ImportTilesetCommand}"/>
+
+                <Border BorderBrush="#333" BorderThickness="1" Height="200" Margin="0,4,0,0">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#0E0E1A">
+                        <ctrl:GridCanvas Source="{Binding TilesetImage}"
+                                         CellWidth="{Binding TileWidth}" CellHeight="{Binding TileHeight}"
+                                         Zoom="{Binding TilesetZoom}" ShowGrid="True"
+                                         SelectedCell="{Binding SelectedCell}"
+                                         CellCommand="{Binding SelectTileCommand}"/>
+                    </ScrollViewer>
+                </Border>
+                <TextBlock Text="{Binding SelectedTileIndex, StringFormat='Tuile sélectionnée : {0}'}" Foreground="#AAA" FontSize="11"/>
+
+                <TextBlock Text="Carte" FontWeight="Bold" Margin="0,10,0,0"/>
+                <Grid ColumnDefinitions="*,*">
+                    <StackPanel Grid.Column="0" Margin="0,0,4,0"><TextBlock Text="Colonnes"/><NumericUpDown Value="{Binding MapColumns}" Minimum="1"/></StackPanel>
+                    <StackPanel Grid.Column="1"><TextBlock Text="Lignes"/><NumericUpDown Value="{Binding MapRows}" Minimum="1"/></StackPanel>
+                </Grid>
+                <Button Content="Appliquer la taille" HorizontalAlignment="Stretch" Command="{Binding ApplyMapSizeCommand}"/>
+
+                <TextBlock Text="Calque actif" Margin="0,8,0,0"/>
+                <ComboBox SelectedIndex="{Binding ActiveLayer}" HorizontalAlignment="Stretch">
+                    <ComboBoxItem>Fond</ComboBoxItem>
+                    <ComboBoxItem>Premier plan</ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Zoom carte" Margin="0,8,0,0"/>
+                <NumericUpDown Value="{Binding MapZoom}" Minimum="1" Maximum="16"/>
+
+                <TextBlock Text="Export" FontWeight="Bold" Margin="0,10,0,0"/>
+                <Button Content="💾 Exporter C++" HorizontalAlignment="Stretch" Command="{Binding ExportCppCommand}"/>
+                <Button Content="💾 Enregistrer (.gbmap)" HorizontalAlignment="Stretch" Command="{Binding SaveProjectCommand}"/>
+                <Button Content="📂 Ouvrir (.gbmap)" HorizontalAlignment="Stretch" Command="{Binding OpenProjectCommand}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Carte -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+            <Border Grid.Row="0" Background="#16162A" Padding="10,6">
+                <TextBlock Text="{Binding Status}" Foreground="#BBB" TextWrapping="Wrap"/>
+            </Border>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#0E0E1A">
+                <ctrl:GridCanvas Source="{Binding MapImage}"
+                                 CellWidth="{Binding TileWidth}" CellHeight="{Binding TileHeight}"
+                                 Zoom="{Binding MapZoom}" ShowGrid="True"
+                                 CellCommand="{Binding PaintCellCommand}"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

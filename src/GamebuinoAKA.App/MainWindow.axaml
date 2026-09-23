@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="GamebuinoAKA.App.MainWindow"
+        x:CompileBindings="False"
+        Title="Gamebuino AKA IDE" Width="1180" Height="740"
+        MinWidth="960" MinHeight="600">
+    <Grid ColumnDefinitions="210,*">
+        <Border Grid.Column="0" Background="#16162A" Padding="12">
+            <StackPanel Spacing="5">
+                <TextBlock Text="Gamebuino" FontSize="18" FontWeight="Bold" Foreground="#8A63D2"/>
+                <TextBlock Text="AKA IDE" FontSize="13" Foreground="#AAAAAA" Margin="0,0,0,14"/>
+                <Button Content="🏠  Accueil" HorizontalAlignment="Stretch" Command="{Binding NavigateToHomeCommand}"/>
+                <Button Content="📁  Projets" HorizontalAlignment="Stretch" Command="{Binding NavigateToProjectsCommand}"/>
+                <Button Content="➕  Nouveau projet" HorizontalAlignment="Stretch" Command="{Binding NavigateToNewProjectCommand}"/>
+                <Button Content="🎨  Sprites" HorizontalAlignment="Stretch" Command="{Binding NavigateToSpriteEditorCommand}"/>
+                <Button Content="🗺  Tilemaps" HorizontalAlignment="Stretch" Command="{Binding NavigateToTilemapEditorCommand}"/>
+                <Button Content="🔊  Banque de sons" HorizontalAlignment="Stretch" Command="{Binding NavigateToSoundBankCommand}"/>
+                <Button Content="🧩  Procédures" HorizontalAlignment="Stretch" Command="{Binding NavigateToSnippetsCommand}"/>
+                <Button Content="📝  Éditeur de code" HorizontalAlignment="Stretch" Command="{Binding NavigateToCodeEditorCommand}"/>
+                <Button Content="⚙  Paramètres" HorizontalAlignment="Stretch" Command="{Binding NavigateToSettingsCommand}"/>
+            </StackPanel>
+        </Border>
+        <ContentControl Grid.Column="1" Content="{Binding CurrentPage}"/>
+    </Grid>
+</Window>

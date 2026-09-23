@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ae="using:AvaloniaEdit"
+             x:Class="GamebuinoAKA.App.Views.CodeEditorView"
+             x:CompileBindings="False">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+
+        <!-- Barre du haut : langage, fichier, transfert -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,10">
+            <TextBlock Text="Éditeur de code" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"
+                       Margin="0,0,16,0"/>
+
+            <TextBlock Text="Langage :" VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"
+                      DisplayMemberBinding="{Binding DisplayName}" Width="180"/>
+
+            <Button Content="🆕 Nouveau" Command="{Binding NewFileCommand}"/>
+            <Button Content="📂 Ouvrir" Command="{Binding OpenFileCommand}"/>
+            <Button Content="💾 Enregistrer" Command="{Binding SaveFileCommand}"/>
+            <Button Content="✓ Vérifier" Command="{Binding CheckCodeCommand}"
+                    ToolTip.Tip="Contrôle structurel avant envoi : parenthèses/chaînes/blocs bien refermés, indentation Python (voir CodeCheckService — pas un compilateur complet)."/>
+        </StackPanel>
+
+        <!-- Éditeur -->
+        <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4">
+            <ae:TextEditor Name="Editor" Text="{Binding Code, Mode=TwoWay}"
+                           FontFamily="Cascadia Code,Consolas,monospace" FontSize="14"
+                           ShowLineNumbers="True" Margin="4"/>
+        </Border>
+
+        <!-- Barre du bas : envoi vers l'AKA -->
+        <Grid Grid.Row="2" ColumnDefinitions="Auto,140,Auto,*,Auto,Auto" Margin="0,10,0,0">
+            <TextBlock Grid.Column="0" Text="Port série :" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" Text="{Binding PortName}" Watermark="/dev/ttyUSB0 ou COM5"/>
+
+            <TextBlock Grid.Column="2" Text="  Sur l'appareil :" VerticalAlignment="Center" Margin="10,0,6,0"/>
+            <TextBox Grid.Column="3" Text="{Binding DevicePath}" Watermark="cassebriques/main.lua"/>
+
+            <Button Grid.Column="4" Content="📤 Envoyer vers l'AKA" Command="{Binding SendToDeviceCommand}"
+                    Margin="10,0,0,0"/>
+            <ProgressBar Grid.Column="5" IsIndeterminate="True" Width="60" Margin="8,0,0,0"
+                         IsVisible="{Binding IsBusy}"/>
+        </Grid>
+
+        <TextBlock Grid.Row="2" Text="{Binding Status}" Foreground="{Binding StatusColor}" FontSize="11"
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,40,0,0"/>
+    </Grid>
+</UserControl>

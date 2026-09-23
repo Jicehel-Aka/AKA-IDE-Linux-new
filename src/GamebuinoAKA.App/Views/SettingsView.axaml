@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="GamebuinoAKA.App.Views.SettingsView"
+             x:CompileBindings="False">
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="10" MaxWidth="620" HorizontalAlignment="Left">
+            <TextBlock Text="Paramètres" FontSize="20" FontWeight="Bold" Margin="0,0,0,8"/>
+
+            <TextBlock Text="Dossier workspace"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Grid.Column="0" Text="{Binding WorkspaceFolder}" Margin="0,0,8,0"/>
+                <Button Grid.Column="1" Content="Parcourir" Command="{Binding BrowseWorkspaceCommand}"/>
+            </Grid>
+
+            <TextBlock Text="Chemin PlatformIO (pio)" Margin="0,8,0,0"/>
+            <TextBox Text="{Binding PlatformIOPath}"/>
+
+            <TextBlock Text="Chemin VS Code (code)" Margin="0,8,0,0"/>
+            <TextBox Text="{Binding VSCodePath}"/>
+
+            <TextBlock Text="Script d'environnement ESP-IDF (export.sh / export.bat)" Margin="0,8,0,0"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Grid.Column="0" Text="{Binding IdfExportScript}" Margin="0,0,8,0"/>
+                <Button Grid.Column="1" Content="Parcourir" Command="{Binding BrowseExportScriptCommand}"/>
+            </Grid>
+
+            <TextBlock Text="Port série (ex. /dev/ttyUSB0)" Margin="0,8,0,0"/>
+            <TextBox Text="{Binding IdfSerialPort}" MaxWidth="220" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="components/gamebuino de référence" Margin="0,8,0,0"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Grid.Column="0" Text="{Binding ReferenceComponentPath}" Margin="0,0,8,0"/>
+                <Button Grid.Column="1" Content="Parcourir" Command="{Binding BrowseReferenceCommand}"/>
+            </Grid>
+
+            <TextBlock Text="Chaîne de build par défaut" Margin="0,8,0,0"/>
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <RadioButton GroupName="dbs" Content="ESP-IDF" IsChecked="{Binding DefaultEspIdf}"/>
+                <RadioButton GroupName="dbs" Content="PlatformIO"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
+                <Button Content="💾 Enregistrer" Command="{Binding SaveCommand}"/>
+                <Button Content="🔍 Auto-détecter" Command="{Binding AutoDetectCommand}"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Status}" Foreground="#88CC88" TextWrapping="Wrap"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="GamebuinoAKA.App.Views.NewProjectView"
+             x:CompileBindings="False">
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="10" MaxWidth="560" HorizontalAlignment="Left">
+            <TextBlock Text="Nouveau projet" FontSize="20" FontWeight="Bold" Margin="0,0,0,8"/>
+
+            <TextBlock Text="Nom du projet"/>
+            <TextBox Text="{Binding ProjectName}"/>
+
+            <TextBlock Text="Chaîne de build" Margin="0,8,0,0"/>
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <RadioButton GroupName="bs" Content="ESP-IDF (coquille)" IsChecked="{Binding IsEspIdf}"/>
+                <RadioButton GroupName="bs" Content="PlatformIO (Arduino)"/>
+            </StackPanel>
+
+            <StackPanel IsVisible="{Binding IsPlatformIO}">
+                <TextBlock Text="Template" Margin="0,8,0,0"/>
+                <ComboBox ItemsSource="{Binding Templates}" SelectedItem="{Binding SelectedTemplate}" HorizontalAlignment="Left" MinWidth="200"/>
+            </StackPanel>
+
+            <StackPanel IsVisible="{Binding IsEspIdf}" Margin="0,8,0,0">
+                <CheckBox Content="Ajouter le support audio (mixeur + tâche + module audio.h/.cpp)" IsChecked="{Binding AddAudio}"/>
+                <TextBlock Text="Génère la plomberie minimale : appuyez sur A dans le projet pour un bip. Utilisez audio_beep(), audio_sfx(), audio_music_note()."
+                           Foreground="#888" FontSize="11" TextWrapping="Wrap" Margin="24,2,0,0"/>
+            </StackPanel>
+
+            <TextBlock Text="Dossier de destination" Margin="0,8,0,0"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBox Grid.Column="0" Text="{Binding DestinationFolder}" Margin="0,0,8,0"/>
+                <Button Grid.Column="1" Content="Parcourir" Command="{Binding BrowseCommand}"/>
+            </Grid>
+
+            <TextBlock Text="{Binding Status}" Foreground="#E06666" TextWrapping="Wrap" Margin="0,4,0,0"/>
+
+            <Button Content="✅ Créer le projet" Command="{Binding CreateCommand}" Margin="0,12,0,0" HorizontalAlignment="Left"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

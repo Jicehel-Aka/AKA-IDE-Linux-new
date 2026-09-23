@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace>GamebuinoAKA.App</RootNamespace>
+    <AssemblyName>GamebuinoAKA.App</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.3"
+                      Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <!-- Éditeur de code (Lua / MicroPython...) avec coloration syntaxique.
+         Version non vérifiée contre le catalogue NuGet réel (pas d'accès réseau côté rédaction) :
+         ajustez au besoin au premier `dotnet restore` si "11.2.0" n'existe pas exactement. -->
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GamebuinoAKA.Core\GamebuinoAKA.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Grammaires de coloration syntaxique (.xshd) de l'éditeur de code -->
+    <AvaloniaResource Include="Assets\Highlighting\**" />
+  </ItemGroup>
+
+</Project>

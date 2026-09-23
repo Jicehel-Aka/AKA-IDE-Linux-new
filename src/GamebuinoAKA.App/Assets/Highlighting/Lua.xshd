@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  Coloration syntaxique Lua / AKA-Love pour AvaloniaEdit (format .xshd, hérité d'AvalonEdit).
+  Deux familles de mots reconnus séparément : les mots-clés du langage Lua lui-même (Keywords),
+  et l'API love.* d'AKA-Love (LoveApi) — pour repérer d'un coup d'œil ce qui vient du moteur.
+  La liste de mots-clés/API est tenue à jour avec LanguageDefinitionService.cs (même source de vérité).
+-->
+<SyntaxDefinition name="Lua" extensions=".lua" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="#6A9955" />
+  <Color name="String" foreground="#CE9178" />
+  <Color name="Keyword" foreground="#569CD6" fontWeight="bold" />
+  <Color name="LoveApi" foreground="#4EC9B0" />
+  <Color name="Number" foreground="#B5CEA8" />
+
+  <RuleSet>
+    <Span color="Comment" begin="--\[\[" end="\]\]" />
+    <Span color="Comment" begin="--" />
+    <Span color="String" begin="&quot;" end="&quot;" />
+    <Span color="String" begin="'" end="'" />
+
+    <Keywords color="Keyword">
+      <Word>and</Word> <Word>break</Word> <Word>do</Word> <Word>else</Word> <Word>elseif</Word>
+      <Word>end</Word> <Word>false</Word> <Word>for</Word> <Word>function</Word> <Word>if</Word>
+      <Word>in</Word> <Word>local</Word> <Word>nil</Word> <Word>not</Word> <Word>or</Word>
+      <Word>repeat</Word> <Word>return</Word> <Word>then</Word> <Word>true</Word> <Word>until</Word>
+      <Word>while</Word>
+    </Keywords>
+
+    <Rule color="LoveApi">
+      \blove(\.[A-Za-z_][A-Za-z0-9_]*)+\b
+    </Rule>
+
+    <Rule color="Number">
+      \b0[xX][0-9a-fA-F]+\b | \b\d+(\.\d+)?([eE][+-]?\d+)?\b
+    </Rule>
+  </RuleSet>
+</SyntaxDefinition>

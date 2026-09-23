@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="GamebuinoAKA.App.Views.SoundBankView"
+             x:CompileBindings="False">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,10">
+            <TextBlock Text="Banque de sons" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="🔍 Scanner les projets" Command="{Binding ScanProjectsCommand}"/>
+            <Button Content="📂 Importer" Command="{Binding ImportCommand}"/>
+            <ProgressBar IsIndeterminate="True" Width="80" IsVisible="{Binding IsBusy}"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4">
+            <ListBox ItemsSource="{Binding Assets}" SelectedItem="{Binding Selected}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0" Text="{Binding TypeIcon}" Margin="0,0,8,0"/>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Theme}" Foreground="#8A63D2" FontSize="11"/>
+                                <TextBlock Text="{Binding FilePath}" Foreground="#888" FontSize="10"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
+                                <Button Content="▶" Command="{Binding DataContext.PlayCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"/>
+                                <Button Content="🗑" Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <TextBlock Grid.Row="2" Text="{Binding Status}" Foreground="#AAA" Margin="0,8,0,0"/>
+    </Grid>
+</UserControl>

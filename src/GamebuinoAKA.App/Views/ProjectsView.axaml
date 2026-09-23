@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="GamebuinoAKA.App.Views.ProjectsView"
+             x:CompileBindings="False">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="20">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Margin="0,0,0,12">
+            <TextBlock Text="Projets" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="🔄 Actualiser" Command="{Binding RefreshCommand}"/>
+            <Button Content="➕ Nouveau" Command="{Binding NewProjectCommand}"/>
+            <TextBox Width="280" Watermark="URL GitHub à cloner…" Text="{Binding CloneUrl}"/>
+            <Button Content="⬇ Cloner" Command="{Binding CloneCommand}"/>
+            <ProgressBar IsIndeterminate="True" Width="80" IsVisible="{Binding IsBusy}"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="10" Margin="4" Background="#1E1E32" CornerRadius="4">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding BuildSystemLabel}" Foreground="#8A63D2" FontSize="11"/>
+                                        <TextBlock Text="{Binding FolderPath}" Foreground="#888" FontSize="11"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                        <Button Content="Build"   Command="{Binding DataContext.BuildCommand,   RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                        <Button Content="Flash"   Command="{Binding DataContext.FlashCommand,   RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                        <Button Content="Monitor" Command="{Binding DataContext.MonitorCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                        <Button Content="VS Code" Command="{Binding DataContext.OpenVSCodeCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                        <Button Content="Dossier" Command="{Binding DataContext.OpenFolderCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                        <Button Content="🗑" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Border Grid.Row="2" BorderBrush="#333" BorderThickness="1" CornerRadius="4" Height="180" Margin="0,12,0,0">
+            <ScrollViewer>
+                <TextBox Text="{Binding OutputLog}" IsReadOnly="True" AcceptsReturn="True"
+                         Background="Transparent" BorderThickness="0" FontFamily="monospace" FontSize="12"/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="GamebuinoAKA.App.Views.SnippetsView"
+             x:CompileBindings="False">
+    <Grid ColumnDefinitions="320,*" Margin="20">
+        <Grid Grid.Column="0" RowDefinitions="Auto,*" Margin="0,0,12,0">
+            <StackPanel Grid.Row="0" Margin="0,0,0,8">
+                <TextBlock Text="Procédures (snippets)" FontSize="18" FontWeight="Bold"/>
+                <CheckBox Content="Snippets ESP-IDF (sinon PlatformIO)" IsChecked="{Binding IsEspIdf}" Margin="0,4,0,0"/>
+            </StackPanel>
+            <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4">
+                <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Category}" Foreground="#8A63D2" FontSize="11"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" Text="{Binding SelectedExplanation}" TextWrapping="Wrap" Foreground="#CCC" Margin="0,0,0,8"/>
+            <Border Grid.Row="1" BorderBrush="#333" BorderThickness="1" CornerRadius="4" Background="#0E0E1A">
+                <ScrollViewer>
+                    <TextBox Text="{Binding SelectedCode}" IsReadOnly="True" AcceptsReturn="True"
+                             Background="Transparent" BorderThickness="0" FontFamily="monospace" FontSize="12" Padding="10"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
