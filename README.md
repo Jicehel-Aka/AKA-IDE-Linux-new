@@ -4,7 +4,7 @@
 > poursuit désormais sur **[AKA-IDE-Linux-](https://github.com/Jicehel-Aka/AKA-IDE-Linux-)**.
 >
 > Les releases, le simulateur PC MicroPython/Love2D, la console/moniteur série
-> et le toolkit combiné s'y trouvent. Merci de mettre à jour vos liets et clones.
+> et le toolkit combiné s'y trouvent. Merci de mettre à jour vos liens et clones.
 
 # Gamebuino AKA IDE — édition Linux (Avalonia)
 
