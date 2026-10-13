@@ -1,3 +1,11 @@
+> # ⚠️ Dépôt obsolète — déplacé
+>
+> Ce dépôt (**AKA-IDE-Linux-new**) n'est plus maintenu. Le développement se
+> poursuit désormais sur **[AKA-IDE-Linux-](https://github.com/Jicehel-Aka/AKA-IDE-Linux-)**.
+>
+> Les releases, le simulateur PC MicroPython/Love2D, la console/moniteur série
+> et le toolkit combiné s'y trouvent. Merci de mettre à jour vos liets et clones.
+
 # Gamebuino AKA IDE — édition Linux (Avalonia)
 
 IDE multiplateforme (.NET 10 + Avalonia) pour créer et gérer des jeux
